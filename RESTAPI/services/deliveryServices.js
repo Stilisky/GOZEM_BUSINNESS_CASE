@@ -46,23 +46,18 @@ const saveDelivery = async (delivery) => {
 }
 
 const updateDelivery = async (delivery_id, delivery) => {
-   packageModel.findOneAndUpdate({delivery_id}, delivery, {new: true}, (error, newDelivery) => {
-      if(error) {
-         return null
-      } else {
-         findDeliveryById(delivery)
-      }
-   })
+   const filter = {
+      delivery_id: delivery_id
+   }
+   await deliveryModel.findOneAndUpdate(filter, delivery)
+   return await findDeliveryById(delivery_id)
 }
 
 const deleteDelivery = async (delivery_id) => {
-   packageModel.findOneAndDelete({delivery_id}, (error, delivery) => {
-      if(error) {
-         return null
-      } else {
-         return delivery
-      }
-   })
+   const filter = {
+      delivery_id: delivery_id
+   }
+   return await deliveryModel.findOneAndDelete(filter);
 }
 
 module.exports = {

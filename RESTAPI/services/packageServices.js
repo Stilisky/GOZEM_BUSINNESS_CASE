@@ -64,23 +64,19 @@ const createPackage = async (package) => {
 }
 
 const updatePackage = async (package_id, package) => {
-   packageModel.findOneAndUpdate({package_id}, package, {new: true}, (error, upadatePack) => {
-      if(error) {
-         return null
-      } else {
-         findPackageById(package_id)
-      }
-   })
+   const filter = {
+      package_id: package_id
+   }
+   const upPackage = await packageModel.findOneAndUpdate(filter, package)
+   return await findPackageById(package_id)
 }
 
 const deletePackage = async (package_id) => {
-   packageModel.findOneAndDelete({package_id}, (error, pack) => {
-      if(error) {
-         return null
-      } else {
-         return pack
-      }
-   })
+   const filter = {
+      package_id: package_id
+   }
+   const deletePack = await packageModel.findOneAndDelete(filter)
+   return deletePack
 }
 
 module.exports = {

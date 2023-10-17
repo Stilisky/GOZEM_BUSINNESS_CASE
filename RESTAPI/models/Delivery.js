@@ -15,9 +15,9 @@ const deliverySchema = mongoose.Schema({
       required: true,
       unique: true
    },
-   pickup_time: {type: Date, require: true},
-   start_time: {type: Date, require: true},
-   end_time: {type: Date, require: true},
+   pickup_time: {type: Date},
+   start_time: {type: Date},
+   end_time: {type: Date},
    location: {type: Object, require: true},
    status: {
       type: String,

@@ -5,7 +5,7 @@ const getDeliveries = async(req, res) => {
       const deliveries = await deliveryServices.findDeliveries()
       res.status(200).json(deliveries)
    } catch (error) {
-      res.status(500).json("Server Error")
+      res.status(500).json({error: "Server Error"})
    }
 }
 
@@ -14,7 +14,7 @@ const getDeliveryById = async (req, res) => {
       const delivery = await deliveryServices.findDeliveryById(req.params.id)
       res.status(200).json(delivery)
    } catch (error) {
-      res.status(400).json("This package id doesn't exist")
+      res.status(400).json({error: "This package doesn't exist"})
    }
 }
 
@@ -50,9 +50,9 @@ const updateDelivery = async (req,res) => {
 const deleteDelivery = async (req, res) => {
    try {
       const delivery = await deliveryServices.deleteDelivery(req.params.id)
-      res.status(200).json("Delivery successfuly delete")
+      res.status(200).json({message: "Delivery successfuly delete"})
    } catch (error) {
-      res.status(400).json("This delivery id doesn't exist")
+      res.status(400).json({error: "This delivery doesn't exist"})
    }
 }
 

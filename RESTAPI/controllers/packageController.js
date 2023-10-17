@@ -5,7 +5,7 @@ const getPackages = async(req, res) => {
       const packages = await packageServices.findPackages()
       res.status(200).json(packages)
    } catch (error) {
-      res.status(500).json("Server Error")
+      res.status(500).json({error: "Server Error"})
    }
 }
 
@@ -14,13 +14,14 @@ const getPackageById = async (req, res) => {
       const package = await packageServices.findPackageById(req.params.id)
       res.status(200).json(package)
    } catch (error) {
-      res.status(400).json("This package id doesn't exist")
+      res.status(400).json({error: "This package id doesn't exist"})
    }
 }
 
 const savePackage = async (req, res) => {
    try {
       const id = req.params.id;
+      // console.log(id);
       const pack = {
          package_id: id,
          active_delivery_id: req.body.active_delivery_id,
@@ -56,9 +57,9 @@ const updatePackage = async (req,res) => {
 const deletePackage = async (req, res) => {
    try {
       const pack = await packageServices.deletePackage(req.params.id)
-      res.status(200).json("Package successfuly delete")
+      res.status(200).json({message: "Package successfuly delete"})
    } catch (error) {
-      res.status(400).json("This package id doesn't exist")
+      res.status(400).json({error : "This package id doesn't exist"})
    }
 }
 
