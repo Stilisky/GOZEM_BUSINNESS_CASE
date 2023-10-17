@@ -32,7 +32,8 @@ const deliverySchema = mongoose.Schema({
             return regex.test(value);
          },
          message: 'This Package id is incorrect.'
-      }
+      },
+      required: true
    },
    package: {type: mongoose.Schema.Types.ObjectId, ref:'Package'}
 })

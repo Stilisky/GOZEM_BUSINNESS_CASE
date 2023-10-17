@@ -1,4 +1,5 @@
 const deliveryModel = require('../models/Delivery')
+const {addDeliveryToPackage} = require('./packageDelivery')
 
 const  findDeliveries = async () => {
    const deliveries = await deliveryModel.find()
@@ -34,6 +35,7 @@ const findDeliveryById = async (delivery_id) => {
 const saveDelivery = async (delivery) => {
    const newDelivery = new deliveryModel(delivery)
    const deliveryCreate = await newDelivery.save()
+   await addDeliveryToPackage(deliveryCreate.package_id, deliveryCreate.delivery_id)
    return {
       delivery_id: deliveryCreate.delivery_id,
       pickup_time: deliveryCreate.pickup_time,
@@ -46,11 +48,24 @@ const saveDelivery = async (delivery) => {
 }
 
 const updateDelivery = async (delivery_id, delivery) => {
+
+   var updateActivePackage = false
+   
+   if(delivery.package_id){ updateActivePackage = true}
+   
    const filter = {
       delivery_id: delivery_id
    }
+   
    await deliveryModel.findOneAndUpdate(filter, delivery)
-   return await findDeliveryById(delivery_id)
+   
+   const upDelivery = await findDeliveryById(delivery_id)
+   
+   if(updateActivePackage){
+      await addDeliveryToPackage(upDelivery.package_id, upDelivery.delivery_id)
+   }
+
+   return upDelivery
 }
 
 const deleteDelivery = async (delivery_id) => {
