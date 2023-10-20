@@ -7,6 +7,8 @@ import { PackageComponent } from './package/package.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule} from '@angular/common/http'
+import { PackageService } from './package/package.service';
+import { DeliveryService } from './delivery/delivery.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { HttpClientModule} from '@angular/common/http'
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    PackageService,
+    DeliveryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
