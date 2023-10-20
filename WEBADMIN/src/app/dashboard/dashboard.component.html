@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col s12"><h4>Package List</h4></div>
         <div class="col s12">
-          <table class="highlight">
-            <thead>
+          <table class="striped">
+            <thead style="background-color: #a0e98f;">
               <tr>
                   <th>Package ID</th>
                   <th>Expeditor</th>
@@ -17,29 +17,14 @@
             </thead>
 
             <tbody>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Eclair Malo Greg Mio</td>
-                <td>Eclair Du Claire</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>No Delivery</td>
-              </tr>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Eclair Malo</td>
-                <td>Eclair Du Claire</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>Activate Delivery</td>
-              </tr>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Eclair Malo</td>
-                <td>Eclair Du Claire</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>None</td>
+              <tr *ngFor="let package of packages">
+                <td>{{ package.package_id }}</td>
+                <td>{{ package.from_name }}</td>
+                <td>{{ package.to_name }}</td>
+                <td>Lat: {{package.from_location.lat}} | Lng: {{package.from_location.lng}}</td>
+                <td>Lat: {{package.to_location.lat}} | Lng: {{package.to_location.lng}}</td>
+                <td *ngIf="package.active_delivery_id">Assigned delivery</td>
+                <td *ngIf="!package.active_delivery_id">Unassigned delivery</td>
               </tr>
             </tbody>
           </table>
@@ -72,33 +57,39 @@
         <div class="col s12"><h4>Delivery List</h4></div>
         <div class="col s12">
           <table class="striped">
-            <thead>
+            <thead style="background-color: #a0e98f;">
               <tr>
                   <th>Delivery ID</th>
                   <th>Package ID</th>
                   <th>Address</th>
+                  <th>Start Time</th>
+                  <th>Pickup Time</th>
+                  <th>End Time</th>
                   <th>Status</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>None</td>
-              </tr>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>Open</td>
-              </tr>
-              <tr>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>bc078512-1457-cdcf-14ad-aeb123456aaa</td>
-                <td>Lat: 1.05225 | Lng: 50.2</td>
-                <td>In-transit</td>
+              <tr *ngFor="let delivery of deliveries">
+                <td>{{ delivery.delivery_id }}</td>
+                <td>{{ delivery.package_id }}</td>
+                <td>Lat: {{delivery.location.lat}} | Lng: {{delivery.location.lng}}</td>
+                <td *ngIf="delivery.start_time">
+                  <span>{{ delivery.start_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.start_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.start_time">-</td>
+                <td *ngIf="delivery.pickup_time">
+                  <span>{{ delivery.pickup_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.pickup_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.pickup_time">-</td>
+                <td *ngIf="delivery.end_time">
+                  <span>{{ delivery.end_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.end_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.end_time">-</td>
+                <td>{{ delivery.status.toUpperCase() }}</td>
               </tr>
             </tbody>
           </table>
