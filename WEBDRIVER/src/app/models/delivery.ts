@@ -1,6 +1,8 @@
+import { Package } from "./package";
+
 export class Delivery {
   delivery_id: string;
-  package_id: string;
+  package_id: Package;
   pickup_time?: Date;
   start_time?: Date;
   end_time?: Date;
@@ -10,7 +12,7 @@ export class Delivery {
 
   constructor(
     delivery_id: string,
-    package_id: string,
+    package_id: Package,
     location: { lat: number; lng: number },
     status: 'open' | 'picked-up' | 'in-transit' | 'delivered' | 'failed' = 'open',
     pickup_time?: Date,

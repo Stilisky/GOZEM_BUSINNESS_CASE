@@ -32,19 +32,19 @@
       <table>
         <tr>
           <td>Sender Name</td>
-          <td>Kolo du  17</td>
+          <td>{{ delivery.package_id.from_name }}</td>
         </tr>
         <tr>
           <td>Sender location</td>
-          <td>Lat: <br> Long: </td>
+          <td>Lat: {{ delivery.package_id.from_location.lat }}<br> Long: {{ delivery.package_id.from_location.lng }}</td>
         </tr>
         <tr>
           <td>Recipient Name</td>
-          <td>Kolo du  17</td>
+          <td>{{ delivery.package_id.to_name }}</td>
         </tr>
         <tr>
           <td>Recipient location</td>
-          <td>Lat: <br> Long: </td>
+          <td>Lat: {{ delivery.package_id.to_location.lat }}<br> Long: {{ delivery.package_id.to_location.lng }}</td>
         </tr>
       </table>
       <h5>
@@ -86,7 +86,7 @@
       </table>
     </div>
     <div class="col s6">
-
+      <div id="map" style="width: 100%; height: 500px;"></div>
     </div>
     <div class="col s2">
       <button class="waves-effect waves-light blue btn">Picked Up</button>
