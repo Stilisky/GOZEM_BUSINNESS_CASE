@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { DriverComponent } from './driver/driver.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DeliveryService } from './services/delivery.service';
+import { PackageService } from './services/package.service';
+import { HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -16,9 +19,10 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DeliveryService, PackageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

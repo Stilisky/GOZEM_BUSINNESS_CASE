@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col s12">
       <form class="col s12" #search="ngForm" (ngSubmit)="onSubmit(search)">
-        <!-- <h6 *ngIf="error">
+        <h6 *ngIf="error">
           <span class="red-text">{{ error }}</span>
-        </h6> -->
+        </h6>
         <div class="row">
           <div class="input-field col s6">
             <i class="material-icons prefix">search</i>
@@ -15,6 +15,84 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+  <div class="col s12">
+    <h5 *ngIf="!delivery">
+      <span class="green-text">No informations availabe</span>
+    </h5>
+  </div>
+</div>
+<div *ngIf="delivery">
+  <div class="row">
+    <div class="col s4">
+      <h5>
+        <span class="green-text">Package Details</span>
+      </h5>
+      <table>
+        <tr>
+          <td>Sender Name</td>
+          <td>Kolo du  17</td>
+        </tr>
+        <tr>
+          <td>Sender location</td>
+          <td>Lat: <br> Long: </td>
+        </tr>
+        <tr>
+          <td>Recipient Name</td>
+          <td>Kolo du  17</td>
+        </tr>
+        <tr>
+          <td>Recipient location</td>
+          <td>Lat: <br> Long: </td>
+        </tr>
+      </table>
+      <h5>
+        <span class="green-text">Delivery Details</span>
+      </h5>
+      <table>
+        <tr>
+          <td>Location</td>
+          <td>Lat: {{delivery.location.lat}}<br> Long: {{delivery.location.lng}}</td>
+        </tr>
+        <tr>
+          <td>Start Time</td>
+          <td *ngIf="delivery.start_time">
+            {{ delivery.start_time | date: 'dd/MM/yy' }} <br>
+            At {{ delivery.start_time | date: 'HH:mm' }}
+          </td>
+          <td *ngIf="!delivery.start_time">-</td>
+        </tr>
+        <tr>
+          <td>PickUp Time</td>
+          <td *ngIf="delivery.pickup_time">
+            {{ delivery.pickup_time | date: 'dd/MM/yy' }} <br>
+            At {{ delivery.pickup_time | date: 'HH:mm' }}
+          </td>
+          <td *ngIf="!delivery.pickup_time">-</td>
+        </tr>
+        <tr>
+          <td>End Time</td>
+          <td *ngIf="delivery.end_time">
+            {{ delivery.end_time | date: 'dd/MM/yy' }} <br>
+            At {{ delivery.end_time | date: 'HH:mm' }}
+          </td>
+          <td *ngIf="!delivery.end_time">-</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>{{ delivery.status }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col s6">
+
+    </div>
+    <div class="col s2">
+      <button class="waves-effect waves-light blue btn">Picked Up</button>
+      <button class="waves-effect waves-light orange btn" >In-Transit</button>
+      <button class="waves-effect waves-light green btn">Delivered</button>
+      <button class="waves-effect waves-light red btn">Failed</button>
     </div>
   </div>
 </div>
