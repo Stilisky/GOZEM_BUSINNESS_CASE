@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="green-text col s12"><h4>Create Delivery</h4></div>
+    <form class="col s10" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="input-field col s10">
+          <!-- <label for="packageid">Package Id</label> -->
+          <input name="deliveryid" [(ngModel)]="packageid"  type="text" data-length="36" class="validate" placeholder="Package Id (Format GUID )" required >
+          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Delivery Id (Format GUID | Ex: bc078512-1457-cdcf-14ad-aeb123456aaa) <span class="red-text">*</span></span>
+        </div>
+        <div class="input-field col s10">
+          <input name="lattitude"  type="number" step="0.001" class="validate" placeholder="Location Lattitude">
+          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Lattitude of location <span class="red-text">*</span></span>
+        </div>
+        <div class="input-field col s10">
+          <input name="longitude"  type="number" step="0.001" class="validate" placeholder="Location Longititude">
+          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Longitude of location <span class="red-text">*</span></span>
+        </div>
+        <div class="input-field col s10">
+          <select name="packageid" >
+            <option value="" disabled selected>Choose the Package</option>
+            <option *ngFor="let package of packages" value="package.package_id">{{ package.package_id }}</option>
+          </select>
+        </div>
+        <button type="submit" class="waves-effect waves-light green" routerLink="delivery">Create Delivery</button>
+      </div>
+    </form>
+  </div>
+</div>

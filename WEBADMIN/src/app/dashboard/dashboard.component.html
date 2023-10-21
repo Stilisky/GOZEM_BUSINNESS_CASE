@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <h4 class="col s4">Package List</h4>
+            <div class="col s3 offset-s5" style="position: relative;left: 57px;top: 23px;">
+              <a class="waves-effect waves-light green btn" routerLink="package" >Create Package</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <table class="striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <thead style="background-color: #a0e98f;">
+              <tr>
+                  <th>Package ID</th>
+                  <th>Sender</th>
+                  <th>Recipient</th>
+                  <th>Sender address</th>
+                  <th>Recipient address</th>
+                  <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let package of packages">
+                <td>{{ package.package_id }}</td>
+                <td>{{ package.from_name }}</td>
+                <td>{{ package.to_name }}</td>
+                <td>Lat: {{package.from_location.lat}} <br>Long: {{package.from_location.lng}}</td>
+                <td>Lat: {{package.to_location.lat}} <br>Long: {{package.to_location.lng}}</td>
+                <td *ngIf="package.active_delivery_id">Assigned delivery</td>
+                <td *ngIf="!package.active_delivery_id">Unassigned delivery</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="pagination">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="active green"><a href="#!">1</a></li>
+            <li class="waves-effect"><a href="#!">2</a></li>
+            <li class="waves-effect"><a href="#!">3</a></li>
+            <li class="waves-effect"><a href="#!">4</a></li>
+            <li class="waves-effect"><a href="#!">5</a></li>
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <h4 class="col s4">Delivery List</h4>
+            <div class="col s3 offset-s5" style="position: relative;left: 57px;top: 23px;">
+              <a class="waves-effect waves-light green btn" routerLink="delivery" >Create Delivery</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <table class="striped" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <thead style="background-color: #a0e98f;">
+              <tr>
+                  <th>Delivery ID</th>
+                  <th>Package ID</th>
+                  <th>Address</th>
+                  <th>Start Time</th>
+                  <th>Pickup Time</th>
+                  <th>End Time</th>
+                  <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let delivery of deliveries">
+                <td>{{ delivery.delivery_id }}</td>
+                <td>{{ delivery.package_id }}</td>
+                <td>Lat: {{delivery.location.lat}} <br>Long: {{delivery.location.lng}}</td>
+                <td *ngIf="delivery.start_time">
+                  <span>{{ delivery.start_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.start_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.start_time">-</td>
+                <td *ngIf="delivery.pickup_time">
+                  <span>{{ delivery.pickup_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.pickup_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.pickup_time">-</td>
+                <td *ngIf="delivery.end_time">
+                  <span>{{ delivery.end_time | date: 'dd/MM/yy' }}</span> <br>
+                  <span>At {{ delivery.end_time | date: 'HH:mm' }}</span>
+                </td>
+                <td *ngIf="!delivery.end_time">-</td>
+                <td>{{ delivery.status.toUpperCase() }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="pagination">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="active green"><a href="#!">1</a></li>
+            <li class="waves-effect"><a href="#!">2</a></li>
+            <li class="waves-effect"><a href="#!">3</a></li>
+            <li class="waves-effect"><a href="#!">4</a></li>
+            <li class="waves-effect"><a href="#!">5</a></li>
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
