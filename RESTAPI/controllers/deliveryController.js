@@ -1,4 +1,5 @@
 const deliveryServices = require('../services/deliveryServices')
+const packageServices = require('../services/packageServices')
 
 const getDeliveries = async(req, res) => {
    try {
@@ -12,6 +13,8 @@ const getDeliveries = async(req, res) => {
 const getDeliveryById = async (req, res) => {
    try {
       const delivery = await deliveryServices.findDeliveryById(req.params.id)
+      const package = await packageServices.findPackageById(delivery.package_id);
+      delivery.package_id = package;
       res.status(200).json(delivery)
    } catch (error) {
       res.status(400).json({error: "This delivery doesn't exist"})
