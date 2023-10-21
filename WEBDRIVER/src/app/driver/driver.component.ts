@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-driver',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent {
+  // searchValue: string;
 
+  constructor(
+
+  ){}
+
+  onSubmit(form: NgForm){
+
+  }
 }
