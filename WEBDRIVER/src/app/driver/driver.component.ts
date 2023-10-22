@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DeliveryService } from '../services/delivery.service';
 import { Delivery } from '../models/delivery';
-import * as L from 'leaflet';
+import { io } from 'socket.io-client';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-driver',
@@ -12,15 +13,26 @@ import * as L from 'leaflet';
 export class DriverComponent implements OnInit {
   searchValue: string | undefined;
   error: string | undefined;
-  delivery: Delivery | undefined;
+  delivery: any;
   pickedUp: boolean = false;
   inTransit: boolean = false;
   delivered: boolean = false;
   failed: boolean = false;
+  // socket = io('http://127.0.0.1:5010').on('delivery_update', (data) => {
+  //   this.delivery = data
+  //   this.deliveryStatus(this.delivery.status)
+  // })
 
   constructor(
-    private deliveryService: DeliveryService
-  ){}
+    private deliveryService: DeliveryService,
+    private webSocket: WebsocketService
+  ){
+    webSocket.listenDeliveryUpdate((data) =>{
+      this.delivery = data;
+    })
+  }
+
+
 
   onSubmit(form: NgForm){
     if(this.searchValue){
@@ -71,15 +83,12 @@ export class DriverComponent implements OnInit {
 
   onChangeStatus(stat: string) {
     this.deliveryStatus(stat)
-    // if(stat === "open"){
-
-    // } else if(stat === "picked-up"){
-
-    // } else if (stat === "in-transit"){
-
-    // } else if(stat === "delivered" || stat === "failed"){
-
-    // }
+    const data = {
+      event: 'status_changed',
+      delivery_id: this.delivery.delivery_id,
+      status: stat
+    }
+    this.webSocket.sendStatusChange(data)
   }
 
 

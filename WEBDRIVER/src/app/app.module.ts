@@ -10,6 +10,7 @@ import { DeliveryService } from './services/delivery.service';
 import { PackageService } from './services/package.service';
 import { HttpClientModule} from '@angular/common/http';
 import { MapsComponent } from './maps/maps.component'
+import { WebsocketService } from './services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { MapsComponent } from './maps/maps.component'
     FormsModule,
     HttpClientModule
   ],
-  providers: [DeliveryService, PackageService],
+  providers: [DeliveryService, PackageService, WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

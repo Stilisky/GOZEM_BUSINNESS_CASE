@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import io from 'socket.io-client'
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-maps',
@@ -13,7 +13,10 @@ export class MapsComponent implements OnInit {
   map: any;
   currentMaker: any;
   trajet: any;
-  // socket = io('http://127.0.0.1:5000')
+
+  constructor(
+    private webSocket: WebsocketService
+  ){}
 
   ngOnInit(): void {
 
@@ -49,6 +52,7 @@ export class MapsComponent implements OnInit {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
+        this.webSocketLocationChange(this.currentLocation)
         this.addCurrentPositionToMap()
       })
     }else {
@@ -77,6 +81,7 @@ export class MapsComponent implements OnInit {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
+        this.webSocketLocationChange(this.currentLocation)
         this.currentMaker.setLatLng([this.currentLocation.lat, this.currentLocation.lng]);
         const newRoute = [
           [this.currentLocation.lat, this.currentLocation.lng],
@@ -86,6 +91,19 @@ export class MapsComponent implements OnInit {
       })
     }else {
       console.log("No geolocation");
+    }
+  }
+
+  webSocketLocationChange(current: any){
+    if(this.deliveryData.status === 'picked-up' || this.deliveryData.status === 'in-transit'){
+      if(!this.deliveryData.location || current.lat != this.deliveryData.location.lat || current.lng != this.deliveryData.location.lng){
+        const data = {
+          event: 'location_changed',
+          delivery_id: this.deliveryData.delivery_id,
+          location: current
+        }
+        this.webSocket.sendLocationChange(data)
+      }
     }
   }
 }
