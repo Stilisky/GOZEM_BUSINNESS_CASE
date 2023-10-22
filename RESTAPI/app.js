@@ -7,8 +7,24 @@ const dbConnection = require ('./db/config')
 const bodyParser = require('body-parser')
 var packagesRouter = require('./routes/packageRoutes');
 var deliveriesRouter = require('./routes/deliveryRoutes');
+const {
+  webSocketDeliveryUpdateBroadcast,
+  webSocketGetDelivery,
+  webSocketLocationChange,
+  webSocketStatusChange
+} = require('./controllers/websocket.controller')
 
 var app = express();
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server,{
+  cors: {
+    origin: '*'
+  }
+});
+
+server.listen(5010)
+
 dbConnection
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,6 +51,28 @@ app.use((req, res, next) => {
 //Mes routes
 app.use('/api/delivery', deliveriesRouter);
 app.use('/api/package', packagesRouter);
+
+//WebSocket clients
+const clients = []
+
+// Websockets Events
+io.on('connection', (socket) => {
+  console.log("web client is connect");
+  clients.push(socket)
+  socket.on('location_changed', async (data) => {
+    // console.log(data.delivery_id);
+    await webSocketLocationChange(data)
+    const delivery = await webSocketGetDelivery(data)
+    webSocketDeliveryUpdateBroadcast(clients, delivery);
+  });
+
+  socket.on('status_changed', async (data) => {
+    // console.log(data);
+    await webSocketStatusChange(data)
+    const delivery = await webSocketGetDelivery(data)
+    webSocketDeliveryUpdateBroadcast(clients, delivery);
+  });
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

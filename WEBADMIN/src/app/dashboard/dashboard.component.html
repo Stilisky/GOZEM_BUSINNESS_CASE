@@ -17,8 +17,8 @@
                   <th>Package ID</th>
                   <th>Sender</th>
                   <th>Recipient</th>
-                  <th>Sender address</th>
-                  <th>Recipient address</th>
+                  <th>Sender location</th>
+                  <th>Recipient location</th>
                   <th>Status</th>
               </tr>
             </thead>
@@ -81,7 +81,8 @@
               <tr *ngFor="let delivery of deliveries">
                 <td>{{ delivery.delivery_id }}</td>
                 <td>{{ delivery.package_id }}</td>
-                <td>Lat: {{delivery.location.lat}} <br>Long: {{delivery.location.lng}}</td>
+                <td *ngIf="delivery.location">Lat: {{delivery.location.lat}} <br>Long: {{delivery.location.lng}}</td>
+                <td *ngIf="!delivery.location">-</td>
                 <td *ngIf="delivery.start_time">
                   <span>{{ delivery.start_time | date: 'dd/MM/yy' }}</span> <br>
                   <span>At {{ delivery.start_time | date: 'HH:mm' }}</span>
