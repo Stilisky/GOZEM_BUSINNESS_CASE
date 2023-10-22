@@ -13,6 +13,10 @@ export class DriverComponent implements OnInit {
   searchValue: string | undefined;
   error: string | undefined;
   delivery: Delivery | undefined;
+  pickedUp: boolean = false;
+  inTransit: boolean = false;
+  delivered: boolean = false;
+  failed: boolean = false;
 
   constructor(
     private deliveryService: DeliveryService
@@ -24,7 +28,8 @@ export class DriverComponent implements OnInit {
         (response) => {
           this.error= "";
           this.delivery = response;
-          this.deliveryService.setDeliveryId(this.searchValue)
+          // this.deliveryService.setDeliveryId(this.searchValue)
+          this.deliveryStatus(this.delivery.status)
         },
         (err) => {
           this.error = "This delivery Id doesn't exist. Try again!"
@@ -38,6 +43,30 @@ export class DriverComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  deliveryStatus(stat: string){
+    if(stat === "open"){
+      this.pickedUp = true;
+      this.inTransit = false;
+      this.delivered = false;
+      this.failed = false;
+    } else if(stat === "picked-up"){
+      this.pickedUp = false;
+      this.inTransit = true;
+      this.delivered = false;
+      this.failed = false;
+    } else if (stat === "in-transit"){
+      this.pickedUp = false;
+      this.inTransit = false;
+      this.delivered = true;
+      this.failed = true;
+    } else if(stat === "delivered" || stat === "failed"){
+      this.pickedUp = false;
+      this.inTransit = false;
+      this.delivered = false;
+      this.failed = false;
+    }
   }
 
 

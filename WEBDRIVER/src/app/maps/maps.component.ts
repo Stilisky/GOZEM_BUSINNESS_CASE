@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import io from 'socket.io-client'
 
 @Component({
   selector: 'app-maps',
@@ -12,6 +13,7 @@ export class MapsComponent implements OnInit {
   map: any;
   currentMaker: any;
   trajet: any;
+  socket = io('http://127.0.0.1:5000')
 
   ngOnInit(): void {
 
