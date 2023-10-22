@@ -11,7 +11,9 @@ import { DeliveryService } from '../services/delivery.service';
 export class MapsComponent implements OnInit {
   @Input() deliveryData: any;
   currentLocation: any;
-  map: any
+  map: any;
+  currentMaker: any;
+  trajet: any;
 
   ngOnInit(): void {
 
@@ -30,7 +32,11 @@ export class MapsComponent implements OnInit {
 
     this.getDeliveryPosition()
 
+    setInterval(()=>{
+      this.refreshLocation()
+    }, 20000)
   }
+
 
   getDeliveryPosition(){
     if(navigator.geolocation) {
@@ -43,13 +49,39 @@ export class MapsComponent implements OnInit {
       })
     }else {
       console.log("No geolocation");
-
     }
   }
 
   addCurrentPositionToMap(){
-    L.marker([this.currentLocation.lat, this.currentLocation.lng], {}).addTo(this.map)
+
+    this.currentMaker = L.marker([this.currentLocation.lat, this.currentLocation.lng]).addTo(this.map)
       .bindPopup('Driver Location')
       .openPopup();
+
+    this.trajet = L.polyline([
+      [this.currentLocation.lat, this.currentLocation.lng],
+      [this.deliveryData.package_id.to_location.lat, this.deliveryData.package_id.to_location.lng]
+    ], {color: 'blue'}).addTo(this.map);
+
+    this.map.fitBounds(this.trajet.getBounds());
+  }
+
+  refreshLocation(){
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentLocation= {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        this.currentMaker.setLatLng([this.currentLocation.lat, this.currentLocation.lng]);
+        const newRoute = [
+          [this.currentLocation.lat, this.currentLocation.lng],
+          this.trajet.getLatLngs()[1]
+        ]
+        this.trajet.setLatLngs(newRoute)
+      })
+    }else {
+      console.log("No geolocation");
+    }
   }
 }
