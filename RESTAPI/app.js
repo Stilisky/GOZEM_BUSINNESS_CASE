@@ -8,10 +8,11 @@ const bodyParser = require('body-parser')
 var packagesRouter = require('./routes/packageRoutes');
 var deliveriesRouter = require('./routes/deliveryRoutes');
 const {
+  webSocketDeliveryUpdateBroadcast,
+  webSocketGetDelivery,
   webSocketLocationChange,
-  webSocketGetDelivery, 
-  webSocketDeliveryUpdateBroadcast
-} = require('./services/packageDelivery')
+  webSocketStatusChange
+} = require('./controllers/websocket.controller')
 
 var app = express();
 
@@ -59,16 +60,17 @@ io.on('connection', (socket) => {
   console.log("web client is connect");
   clients.push(socket)
   socket.on('location_changed', async (data) => {
-    webSocketLocationChange(data.delevery_id, data.location)
-    const delivery = await webSocketGetDelivery(data.delevery_id)
+    // console.log(data.delivery_id);
+    webSocketLocationChange(data)
+    const delivery = await webSocketGetDelivery(data)
     webSocketDeliveryUpdateBroadcast(clients, delivery);
   });
 
-  socket.on('status_changed', (data) => {
-
-    socket.emit('status_changed', data);
+  socket.on('status_changed', async (data) => {
+    webSocketStatusChange(data)
+    const delivery = await webSocketGetDelivery(data)
+    webSocketDeliveryUpdateBroadcast(clients, delivery);
   });
-
 })
 
 // catch 404 and forward to error handler
