@@ -18,7 +18,7 @@ const deliverySchema = mongoose.Schema({
    pickup_time: {type: Date},
    start_time: {type: Date},
    end_time: {type: Date},
-   location: {type: Object, require: true},
+   location: {type: Object},
    status: {
       type: String,
       enum: statusEnum,
