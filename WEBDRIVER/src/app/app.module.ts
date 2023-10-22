@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DeliveryService } from './services/delivery.service';
 import { PackageService } from './services/package.service';
-import { HttpClientModule} from '@angular/common/http'
+import { HttpClientModule} from '@angular/common/http';
+import { MapsComponent } from './maps/maps.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    DriverComponent
+    DriverComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,

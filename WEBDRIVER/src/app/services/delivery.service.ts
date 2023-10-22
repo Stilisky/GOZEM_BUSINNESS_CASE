@@ -8,6 +8,19 @@ import { Delivery } from '../models/delivery';
 })
 export class DeliveryService {
 
+  delivId: any ;
+
+  setDeliveryId(deliv: any){
+    this.delivId = deliv
+    console.log(this.delivId);
+
+  }
+
+  getDelivData(){
+    console.log(this.delivId);
+    return this.getDelivery(this.delivId)
+  }
+
   constructor(private http: HttpClient) { }
 
   getDelivery(deliveryId: string): Observable<Delivery> {
