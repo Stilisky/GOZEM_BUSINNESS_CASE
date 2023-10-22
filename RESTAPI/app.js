@@ -61,13 +61,14 @@ io.on('connection', (socket) => {
   clients.push(socket)
   socket.on('location_changed', async (data) => {
     // console.log(data.delivery_id);
-    webSocketLocationChange(data)
+    await webSocketLocationChange(data)
     const delivery = await webSocketGetDelivery(data)
     webSocketDeliveryUpdateBroadcast(clients, delivery);
   });
 
   socket.on('status_changed', async (data) => {
-    webSocketStatusChange(data)
+    // console.log(data);
+    await webSocketStatusChange(data)
     const delivery = await webSocketGetDelivery(data)
     webSocketDeliveryUpdateBroadcast(clients, delivery);
   });
