@@ -13,7 +13,7 @@ export class MapsComponent implements OnInit {
   map: any;
   currentMaker: any;
   trajet: any;
-  socket = io('http://127.0.0.1:5000')
+  // socket = io('http://127.0.0.1:5000')
 
   ngOnInit(): void {
 

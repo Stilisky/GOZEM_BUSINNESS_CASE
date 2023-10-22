@@ -90,10 +90,10 @@
       <app-maps [deliveryData]="delivery"></app-maps>
     </div>
     <div class="col s2">
-      <button class="waves-effect waves-light blue btn" [disabled]="!pickedUp" style="margin: 25px;">Picked Up</button>
-      <button class="waves-effect waves-light orange btn" [disabled]="!inTransit" style="margin: 25px;" >In-Transit</button>
-      <button class="waves-effect waves-light green btn" [disabled]="!delivered" style="margin: 25px;">Delivered</button>
-      <button class="waves-effect waves-light red btn" [disabled]="!failed" style="margin: 25px;">Failed</button>
+      <button class="waves-effect waves-light blue btn" [disabled]="!pickedUp" (click)="onChangeStatus('picked-up')" style="margin: 25px;">Picked Up</button>
+      <button class="waves-effect waves-light orange btn" [disabled]="!inTransit" (click)="onChangeStatus('in-transit')" style="margin: 25px;" >In-Transit</button>
+      <button class="waves-effect waves-light green btn" [disabled]="!delivered" (click)="onChangeStatus('delivered')" style="margin: 25px;">Delivered</button>
+      <button class="waves-effect waves-light red btn" [disabled]="!failed" (click)="onChangeStatus('failed')" style="margin: 25px;">Failed</button>
     </div>
   </div>
 </div>

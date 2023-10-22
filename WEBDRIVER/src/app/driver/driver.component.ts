@@ -69,5 +69,18 @@ export class DriverComponent implements OnInit {
     }
   }
 
+  onChangeStatus(stat: string) {
+    this.deliveryStatus(stat)
+    // if(stat === "open"){
+
+    // } else if(stat === "picked-up"){
+
+    // } else if (stat === "in-transit"){
+
+    // } else if(stat === "delivered" || stat === "failed"){
+
+    // }
+  }
+
 
 }
