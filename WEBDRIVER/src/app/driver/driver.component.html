@@ -57,20 +57,20 @@
           <td *ngIf="!delivery.location">-</td>
         </tr>
         <tr>
-          <td>Start Time</td>
-          <td *ngIf="delivery.start_time">
-            {{ delivery.start_time | date: 'dd/MM/yy' }} <br>
-            At {{ delivery.start_time | date: 'HH:mm' }}
-          </td>
-          <td *ngIf="!delivery.start_time">-</td>
-        </tr>
-        <tr>
           <td>PickUp Time</td>
           <td *ngIf="delivery.pickup_time">
             {{ delivery.pickup_time | date: 'dd/MM/yy' }} <br>
             At {{ delivery.pickup_time | date: 'HH:mm' }}
           </td>
           <td *ngIf="!delivery.pickup_time">-</td>
+        </tr>
+        <tr>
+          <td>Start Time</td>
+          <td *ngIf="delivery.start_time">
+            {{ delivery.start_time | date: 'dd/MM/yy' }} <br>
+            At {{ delivery.start_time | date: 'HH:mm' }}
+          </td>
+          <td *ngIf="!delivery.start_time">-</td>
         </tr>
         <tr>
           <td>End Time</td>
