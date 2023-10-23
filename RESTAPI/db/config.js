@@ -1,6 +1,7 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://127.0.0.1:27017/gozem',{
+mongoose.connect(`${process.env.MONGO_URL_PASS}`,{
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
