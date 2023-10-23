@@ -11,7 +11,10 @@ import { DeliveryService } from '../delivery/delivery.service';
 })
 export class DashboardComponent implements OnInit{
   packages: Package[];
-  deliveries: Delivery[]
+  deliveries: Delivery[];
+  currentPageDelivery: number = 1;
+  currentPagePackage: number = 1;
+  itemsPerPage = 5;
 
   constructor(
     private packageServices: PackageService,
@@ -26,5 +29,61 @@ export class DashboardComponent implements OnInit{
     this.deliveryServices.getDeliveries().subscribe(
       delivs => this.deliveries = delivs
     );
+
+  }
+
+  previewPageDeliv(){
+    if(this.currentPageDelivery > 1) {
+      this.currentPageDelivery--;
+    }
+  }
+
+  nextPageDeliv(){
+    if(this.currentPageDelivery < this.deliveryTotalPage()) {
+      this.currentPageDelivery++;
+    }
+  }
+
+  setDelivPage(page: number){
+    this.currentPageDelivery = page
+  }
+
+  deliveryPages(){
+    const pages: number[] = [];
+    for (let i = 1; i <= this.deliveryTotalPage(); i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  deliveryTotalPage(){
+    return Math.ceil(this.deliveries.length/this.itemsPerPage);
+  }
+
+  previewPagePack(){
+    if(this.currentPagePackage > 1) {
+      this.currentPagePackage--;
+    }
+  }
+
+  nextPagePack(){
+    if(this.currentPagePackage < this.packageTotalPage()) {
+      this.currentPagePackage++;
+    }
+  }
+  setPackagePage(page: number){
+    this.currentPagePackage = page
+  }
+
+  packageTotalPage(){
+    return Math.ceil(this.packages.length/this.itemsPerPage);
+  }
+
+  packagePages(){
+    const pages: number[] = [];
+    for (let i = 1; i <= this.packageTotalPage(); i++) {
+      pages.push(i);
+    }
+    return pages;
   }
 }
