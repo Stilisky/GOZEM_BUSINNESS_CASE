@@ -18,8 +18,6 @@ export class PackageService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-
     return this.http.post<Package>(`http://127.0.0.1:5000/api/package/${newPackage.package_id}`, newPackage, httpOptions)
-
   }
 }

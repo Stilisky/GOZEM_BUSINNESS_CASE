@@ -4,6 +4,7 @@ import { PackageService } from '../package/package.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Delivery } from '../models/delivery';
+import { DeliveryService } from './delivery.service';
 
 @Component({
   selector: 'app-delivery',
@@ -11,23 +12,38 @@ import { Delivery } from '../models/delivery';
   styleUrls: ['./delivery.component.css']
 })
 export class DeliveryComponent implements OnInit{
+  deliveryid: string;
   packageid: string;
-  packages: Package[];
-  newDelivery: Delivery;
+  allpacks: Package[];
+  error: string;
 
   constructor(
     private packageServices: PackageService,
-    private router: Router
+    private router: Router,
+    private deliveryServices: DeliveryService
   ){}
 
   ngOnInit(): void {
     this.packageServices.getPackages().subscribe(
-      packs => this.packages = packs
-    );
+      pack => this.allpacks = pack
+    )
   }
 
-  onSubmit (){
-    console.log(this.packageid);
+  onSubmit (form: NgForm){
+    if(this.deliveryid && this.packageid){
+      const delivery = new Delivery(this.deliveryid, this.packageid)
+      this.deliveryServices.createDelivery(delivery).subscribe(
+        (response) => {
+          this.router.navigate(['']);
+        },
+        (err) => {
+          this.error = "The Delivery Id is invalid format or already exist!"
+        }
+      )
+    } else {
+      this.error = "All fields are mandatory"
+    }
+
   }
 
 }

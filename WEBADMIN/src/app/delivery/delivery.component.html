@@ -1,29 +1,54 @@
 <div class="container">
   <div class="row">
     <div class="green-text col s12"><h4>Create Delivery</h4></div>
-    <form class="col s10" (ngSubmit)="onSubmit()">
+    <form class="col s10" #delivForm="ngForm" (ngSubmit)="onSubmit(delivForm)">
+      <h6 *ngIf="error">
+        <span class="red-text">{{ error }}</span>
+      </h6>
       <div class="row">
-        <div class="input-field col s10">
-          <!-- <label for="packageid">Package Id</label> -->
-          <input name="deliveryid" [(ngModel)]="packageid"  type="text" data-length="36" class="validate" placeholder="Package Id (Format GUID )" required >
+        <div class="input-field col s12">
+          <input name="deliveryid" [(ngModel)]="deliveryid"  type="text" data-length="36" class="validate" placeholder="Delivery Id (Format GUID )" required >
           <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Delivery Id (Format GUID | Ex: bc078512-1457-cdcf-14ad-aeb123456aaa) <span class="red-text">*</span></span>
         </div>
-        <div class="input-field col s10">
-          <input name="lattitude"  type="number" step="0.001" class="validate" placeholder="Location Lattitude">
-          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Lattitude of location <span class="red-text">*</span></span>
-        </div>
-        <div class="input-field col s10">
-          <input name="longitude"  type="number" step="0.001" class="validate" placeholder="Location Longititude">
-          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Longitude of location <span class="red-text">*</span></span>
-        </div>
-        <div class="input-field col s10">
-          <select name="packageid" >
-            <option value="" disabled selected>Choose the Package</option>
-            <option *ngFor="let package of packages" value="package.package_id">{{ package.package_id }}</option>
+        <div class="input-field col s12">
+          <select name="packageid" [(ngModel)]="packageid" style="display: block; background-color: rgb(226 237 220 / 90%);">
+            <option [value]="" disabled selected>Choose the Package</option>
+            <option *ngFor="let package of allpacks" [value]="package.package_id">{{ package.package_id }}</option>
           </select>
+          <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Package Id <span class="red-text">*</span></span>
         </div>
-        <button type="submit" class="waves-effect waves-light green" routerLink="delivery">Create Delivery</button>
+        <h6>
+          (<span class="red-text">*</span>) Field required
+        </h6>
+        <div class="input-field col  offset-s8">
+          <button type="submit" class="waves-effect waves-light green btn">Create</button>
+          <button routerLink=""  class="waves-effect waves-light red btn" style="position: relative; margin-left: 10px;">Go Back</button>
+        </div>
       </div>
     </form>
   </div>
 </div>
+
+<!-- <form class="col s10" #deliForm="ngForm" (ngSubmit)="onSubmit(deliForm)">
+  <div class="row">
+    <div class="input-field col s10">
+      <input name="deliveryid" [(ngModel)]="packageid"  type="text" data-length="36" class="validate" placeholder="Package Id (Format GUID )" required >
+      <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Delivery Id (Format GUID | Ex: bc078512-1457-cdcf-14ad-aeb123456aaa) <span class="red-text">*</span></span>
+    </div>
+    <div class="input-field col s10">
+      <input name="lattitude"  type="number" step="0.001" class="validate" placeholder="Location Lattitude">
+      <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Lattitude of location <span class="red-text">*</span></span>
+    </div>
+    <div class="input-field col s10">
+      <input name="longitude"  type="number" step="0.001" class="validate" placeholder="Location Longititude">
+      <span class="helper-text" style="font-size: medium;" data-error="wrong" data-success="right">Longitude of location <span class="red-text">*</span></span>
+    </div>
+    <div class="input-field col s10">
+      <select name="packageid" >
+        <option value="" disabled selected>Choose the Package</option>
+        <option *ngFor="let package of packages" value="package.package_id">{{ package.package_id }}</option>
+      </select>
+    </div>
+    <button type="submit" class="waves-effect waves-light green" routerLink="delivery">Create Delivery</button>
+  </div>
+</form> -->
