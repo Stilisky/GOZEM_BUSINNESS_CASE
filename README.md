@@ -3,19 +3,19 @@
 ## Installation
 
 Entrer dans chaque application et installer les dépendances et lancer les serveurs
-**RESTAPI**
+## RESTAPI
 - Installer les dépendences avec `npm install`
 - Definir le lien de la base de données dans le .env
 - Démarrer le serveur avec `npm start`
-**WEBADMIN**
+## WEBADMIN
 - Installer les dépendences avec `npm install`
 - Definir le lien l'API et du serveur WebSocket dans le src/environment/environment.ts
 - Démarrer le serveur avec `ng serve`
-**WEBRIVER**
+## WEBRIVER
 - Installer les dépendences avec `npm install`
 - Definir le lien l'API et du serveur WebSocket dans le src/environment/environment.ts
 - Démarrer le serveur avec `ng serve`
-**WEBTRACKER**
+## WEBTRACKER
 - Installer les dépendences avec `npm install`
 - Definir le lien l'API et du serveur WebSocket dans le src/environment/environment.ts
 - Démarrer le serveur avec `ng serve`
