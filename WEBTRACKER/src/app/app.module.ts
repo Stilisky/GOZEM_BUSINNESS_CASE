@@ -7,6 +7,8 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { MapComponent } from './map/map.component';
 import { WebsocketService } from './services/websocket.service';
 import { DeliveryService } from './services/delivery.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DeliveryService } from './services/delivery.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     WebsocketService,
