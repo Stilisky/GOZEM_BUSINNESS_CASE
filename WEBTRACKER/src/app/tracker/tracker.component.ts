@@ -19,7 +19,9 @@ export class TrackerComponent {
     private webSocket: WebsocketService
   ){
     webSocket.listenDeliveryUpdate((data) =>{
-      this.delivery = data;
+      if(data.delivery_id === this.delivery.delivery_id){
+        this.delivery = data;
+      }
     })
   }
 
